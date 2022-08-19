@@ -54,17 +54,17 @@ parser.add_argument('--img-list', required=True, help='line-seperated list of tr
 parser.add_argument('--img-prefix', help='optional input image file prefix')
 parser.add_argument('--img-suffix', help='optional input image file suffix')
 parser.add_argument('--atlas', help='optional atlas filename')
-parser.add_argument('--model-dir', default='models',
+parser.add_argument('--model-dir', default='./models',
                     help='model output directory (default: models)')
 parser.add_argument('--multichannel', action='store_true',
                     help='specify that data has multiple channels')
 
 # training parameters
 parser.add_argument('--gpu', default='0', help='GPU ID numbers (default: 0)')
-parser.add_argument('--batch-size', type=int, default=1, help='batch size (default: 1)')
-parser.add_argument('--epochs', type=int, default=1500,
+parser.add_argument('--batch-size', type=int, default=4, help='batch size (default: 1)')
+parser.add_argument('--epochs', type=int, default=150,
                     help='number of training epochs (default: 1500)')
-parser.add_argument('--steps-per-epoch', type=int, default=100,
+parser.add_argument('--steps-per-epoch', type=int, default=50,
                     help='frequency of model saves (default: 100)')
 parser.add_argument('--load-weights', help='optional weights file to initialize with')
 parser.add_argument('--initial-epoch', type=int, default=0,

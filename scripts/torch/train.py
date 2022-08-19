@@ -122,7 +122,7 @@ os.makedirs(model_dir, exist_ok=True)
 # device handling
 gpus = args.gpu.split(',')
 nb_gpus = len(gpus)
-device = 'cuda'
+device = 'cpu'
 os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
 assert np.mod(args.batch_size, nb_gpus) == 0, \
     'Batch size (%d) should be a multiple of the nr of gpus (%d)' % (args.batch_size, nb_devices)

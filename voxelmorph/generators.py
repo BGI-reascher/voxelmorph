@@ -13,7 +13,7 @@ def volgen(
     np_var='vol',
     pad_shape=None,
     resize_factor=1,
-    add_feat_axis=True
+    add_feat_axis=True,
 ):
     """
     Base generator for random volume loading. Volumes can be passed as a path to
@@ -51,8 +51,13 @@ def volgen(
         # load volumes and concatenate
         load_params = dict(np_var=np_var, add_batch_axis=True, add_feat_axis=add_feat_axis,
                            pad_shape=pad_shape, resize_factor=resize_factor)
+        # moving
         imgs = [py.utils.load_volfile(vol_names[i], **load_params) for i in indices]
         vols = [np.concatenate(imgs, axis=0)]
+
+        # fixed
+        moved_imgs = [py.utils.load_volfile(vol_names[i].replace("fixed","moved"), **load_params) for i in indices]
+        moved_vols = [np.concatenate(moved_imgs, axis=0)]
 
         # optionally load segmentations and concatenate
         if segs is True:
@@ -65,7 +70,7 @@ def volgen(
             s = [py.utils.load_volfile(segs[i], **load_params) for i in indices]
             vols.append(np.concatenate(s, axis=0))
 
-        yield tuple(vols)
+        yield vols[0], moved_vols[0]
 
 
 def scan_to_scan(vol_names, bidir=False, batch_size=1, prob_same=0, no_warp=False, **kwargs):
@@ -84,8 +89,8 @@ def scan_to_scan(vol_names, bidir=False, batch_size=1, prob_same=0, no_warp=Fals
     zeros = None
     gen = volgen(vol_names, batch_size=batch_size, **kwargs)
     while True:
-        scan1 = next(gen)[0]
-        scan2 = next(gen)[0]
+        scan1, scan2 = next(gen)
+        # scan2 = next(gen)[0]
 
         # some induced chance of making source and target equal
         if prob_same > 0 and np.random.rand() < prob_same:

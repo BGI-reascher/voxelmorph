@@ -7,6 +7,7 @@ import functools
 import numpy as np
 import scipy
 from skimage import measure
+import cv2
 
 # local/our imports
 import pystrum.pynd.ndutils as nd
@@ -107,6 +108,9 @@ def load_volfile(
     elif filename.endswith('.npz'):
         npz = np.load(filename)
         vol = next(iter(npz.values())) if len(npz.keys()) == 1 else npz[np_var]
+        affine = None
+    elif filename.endswith(".jpg"):
+        vol = cv2.imread(filename,0)
         affine = None
     else:
         raise ValueError('unknown filetype for %s' % filename)
