@@ -130,8 +130,8 @@ assert np.mod(args.batch_size, nb_devices) == 0, \
     'Batch size (%d) should be a multiple of the nr of gpus (%d)' % (args.batch_size, nb_devices)
 
 # unet architecture
-enc_nf = args.enc if args.enc else [16, 32, 32, 32]
-dec_nf = args.dec if args.dec else [32, 32, 32, 32, 32, 16, 16]
+enc_nf = args.enc if args.enc else [16, 32, 64, 128,128,256]
+dec_nf = args.dec if args.dec else [256,128,128,64, 64, 32, 16, 16]
 
 # prepare model checkpoint save path
 save_filename = os.path.join(model_dir, '{epoch:04d}.h5')

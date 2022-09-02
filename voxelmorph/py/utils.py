@@ -152,6 +152,8 @@ def save_volfile(array, filename, affine=None):
         nib.save(nib.Nifti1Image(array, affine), filename)
     elif filename.endswith('.npz'):
         np.savez_compressed(filename, vol=array)
+    elif filename.endswith("jpg"):
+        cv2.imwrite(filename,array)
     else:
         raise ValueError('unknown filetype for %s' % filename)
 

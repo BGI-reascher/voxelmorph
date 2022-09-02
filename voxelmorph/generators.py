@@ -56,7 +56,7 @@ def volgen(
         vols = [np.concatenate(imgs, axis=0)]
 
         # fixed
-        moved_imgs = [py.utils.load_volfile(vol_names[i].replace("fixed","moved"), **load_params) for i in indices]
+        moved_imgs = [py.utils.load_volfile(vol_names[i].replace("fixed","moving"), **load_params) for i in indices]
         moved_vols = [np.concatenate(moved_imgs, axis=0)]
 
         # optionally load segmentations and concatenate
